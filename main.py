@@ -116,12 +116,6 @@ def main():
 #     pass
 
 
-try:
-    leitor = LeitorDeArquivo("arquivo.txt")
+with LeitorDeArquivo("arquivo.txt") as leitor:
     leitor.ler_proxima_linha()
-    leitor.ler_proxima_linha()
-    leitor.ler_proxima_linha()
-finally:
-    if 'leitor' in locals():
-        leitor.fechar()
 

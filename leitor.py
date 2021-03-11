@@ -11,3 +11,9 @@ class LeitorDeArquivo:
 
     def fechar(self):
         print('Fechando arquivo.')
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, valor, traceback):
+        print("Fechando arquivo.")
