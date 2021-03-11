@@ -78,13 +78,11 @@ def main():
         try:
             nome = input('Nome do cliente:\n')
             agencia = input('Número de agencia:\n')
+            breakpoint()
             numero = input('Número da conta corrente:\n')
             cliente = Cliente(nome, None, None)
             conta_corrente = ContaCorrente(cliente, agencia, numero)
             contas.append(conta_corrente)
-        except ValueError as e:
-            print(type(e.args[1]))
-            sys.exit()
         except KeyboardInterrupt:
             print(f'\n\n{len(contas)}(s) contas criadas')
             sys.exit()
