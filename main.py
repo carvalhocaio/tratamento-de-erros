@@ -118,4 +118,3 @@ def main():
 
 with LeitorDeArquivo("arquivo.txt") as leitor:
     leitor.ler_proxima_linha()
-
