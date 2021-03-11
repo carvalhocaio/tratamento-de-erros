@@ -1,4 +1,4 @@
-from exceptions import SaldoInsuficienteError
+from exceptions import OperacaoFinanceiraError, SaldoInsuficienteError
 
 
 class Cliente:
@@ -65,16 +65,14 @@ class ContaCorrente:
         try:
             self.sacar(valor)
         except SaldoInsuficienteError as e:
-            import traceback
             self.transferencias_nao_permitidas += 1
-            traceback.print_exc()
-            raise e
+            e.args = ()
+            raise OperacaoFinanceiraError('Operação não finalizada') from e
         favorecido.depositar(valor)
 
     def sacar(self, valor):
         if valor < 0:
-            raise ValueError(
-                'O valor a ser sacado não pode ser menor que zero')
+            raise ValueError('O valor a ser sacado não pode ser menor que zero')
         if self.saldo < valor:
             self.saques_nao_permitidos += 1
             raise SaldoInsuficienteError('', self.saldo, valor)
@@ -109,12 +107,9 @@ conta_corrente1 = ContaCorrente(None, 400, 1234567)
 conta_corrente2 = ContaCorrente(None, 401, 1234568)
 
 try:
-    conta_corrente1.transferir(1000, conta_corrente2)
+    conta_corrente1.sacar(1000)
     print(f'ContaCorrente1 - Saldo: {conta_corrente1.saldo}')
     print('ContaCorrente2 - Saldo:', conta_corrente2.saldo)
-except SaldoInsuficienteError as e:
-    import traceback
-    print(e.saldo)
-    print(e.valor)
-    print('Exceção do tipo ', e.__class__.__name__)
-    traceback.print_exc()
+except OperacaoFinanceiraError as e:
+    breakpoint()
+    pass
