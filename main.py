@@ -1,4 +1,5 @@
 from exceptions import OperacaoFinanceiraError, SaldoInsuficienteError
+from leitor import LeitorDeArquivo
 
 
 class Cliente:
@@ -103,13 +104,24 @@ def main():
 # if __name__ == '__main__':
 #     main()
 
-conta_corrente1 = ContaCorrente(None, 400, 1234567)
-conta_corrente2 = ContaCorrente(None, 401, 1234568)
+# conta_corrente1 = ContaCorrente(None, 400, 1234567)
+# conta_corrente2 = ContaCorrente(None, 401, 1234568)
+
+# try:
+#     conta_corrente1.sacar(1000)
+#     print(f'ContaCorrente1 - Saldo: {conta_corrente1.saldo}')
+#     print('ContaCorrente2 - Saldo:', conta_corrente2.saldo)
+# except OperacaoFinanceiraError as e:
+#     breakpoint()
+#     pass
+
 
 try:
-    conta_corrente1.sacar(1000)
-    print(f'ContaCorrente1 - Saldo: {conta_corrente1.saldo}')
-    print('ContaCorrente2 - Saldo:', conta_corrente2.saldo)
-except OperacaoFinanceiraError as e:
-    breakpoint()
-    pass
+    leitor = LeitorDeArquivo("arquivo.txt")
+    leitor.ler_proxima_linha()
+    leitor.ler_proxima_linha()
+    leitor.ler_proxima_linha()
+finally:
+    if 'leitor' in locals():
+        leitor.fechar()
+
